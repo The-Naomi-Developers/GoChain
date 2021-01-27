@@ -14,7 +14,6 @@ import (
 // Basic screenshot impemtation
 func screenshot(c echo.Context) error {
 	var delay int = 3
-	ctx := c.Get("ctx").(context.Context)
 	url := c.QueryParam("url")
 	if url == "" {
 		return c.String(http.StatusNotAcceptable, `Required parameter "url" is empty.`)
