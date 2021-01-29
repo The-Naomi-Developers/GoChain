@@ -17,9 +17,20 @@ func screenshot(c echo.Context) error {
 	}
 
 	var buf []byte
-	if err := chromedp.Run(ctx, fullScreenshot(url, 90, time.Duration(screenshotDelay)*time.Second, &buf)); err != nil {
-		return err
+	if checkInCache(url) {
+		err := readFromCache(url, &buf)
+		if err != nil {
+			return err
+		}
+	} else {
+		if err := chromedp.Run(ctx, fullScreenshot(url, 90, time.Duration(screenshotDelay)*time.Second, &buf)); err != nil {
+			return err
+		}
+		if err := cache(buf, url); err != nil {
+			return err
+		}
 	}
+
 	reader := bytes.NewReader(buf)
 
 	return c.Stream(http.StatusOK, "image/png", reader)
