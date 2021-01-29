@@ -1,2 +1,2 @@
 # GoChain
-A ChromeChain implementation written in Go.
+A some utils implementation REST API written in Go.
