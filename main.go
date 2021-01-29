@@ -17,7 +17,7 @@ var (
 	cx     context.Context
 	cancel context.CancelFunc
 	// User-defined variables
-	cacheDir        string = "./cache"
+	cacheDir        string = "./cache/"
 	port            string = ":5000"
 	cooldown        int    = 2 // seconds
 	screenshotDelay int    = 2 // seconds
@@ -36,6 +36,8 @@ func main() {
 		)
 		cx, cancel = chromedp.NewExecAllocator(context.Background(), o...)
 		defer cancel()
+	} else {
+		cx = context.Background()
 	}
 
 	ctx, cancel = chromedp.NewContext(cx)

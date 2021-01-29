@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"math"
 	"time"
 
 	"github.com/chromedp/cdproto/emulation"
@@ -31,7 +30,7 @@ func fullScreenshot(urlstr string, quality int64, delay time.Duration, res *[]by
 				return err
 			}
 
-			width, height := int64(math.Ceil(contentSize.Width)), int64(math.Ceil(contentSize.Height))
+			width, height := int64(1366), int64(768)
 
 			// force viewport emulation
 			err = emulation.SetDeviceMetricsOverride(width, height, 1, false).
@@ -50,8 +49,8 @@ func fullScreenshot(urlstr string, quality int64, delay time.Duration, res *[]by
 				WithClip(&page.Viewport{
 					X:      contentSize.X,
 					Y:      contentSize.Y,
-					Width:  contentSize.Width,
-					Height: contentSize.Height,
+					Width:  1366,
+					Height: 768,
 					Scale:  1,
 				}).Do(ctx)
 			if err != nil {
